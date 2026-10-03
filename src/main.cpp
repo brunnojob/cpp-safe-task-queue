@@ -46,7 +46,7 @@ int main() {
     Queue q(8);
     std::vector<std::thread> workers;
     for (int i=0; i<2; ++i) workers.emplace_back([&]{ q.worker(); });
-    for (int i=1; i<=20; ++i) q.push([i]{ std::cout << "processed " << i << '\\n'; });
+    for (int i=1; i<=20; ++i) q.push([i]{ std::cout << "processed " << i << '\n'; });
     q.close();
     for (auto& worker : workers) worker.join();
 }
