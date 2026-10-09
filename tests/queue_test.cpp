@@ -37,4 +37,22 @@ int main() {
     rejected = true;
   }
   assert(rejected);
+  TaskQueue nested(1, 1);
+  std::promise<void> entered, proceed;
+  auto gate = proceed.get_future().share();
+  auto outer = nested.submit([&] {
+    entered.set_value();
+    gate.wait();
+    bool denied = false;
+    try { nested.submit([] {}, 0, std::chrono::milliseconds(0)); }
+    catch (const std::runtime_error &error) {
+      denied = std::string(error.what()) == "worker cannot wait for queue capacity";
+    }
+    assert(denied);
+  });
+  entered.get_future().wait();
+  auto pending = nested.submit([] { return 7; });
+  proceed.set_value();
+  outer.get();
+  assert(pending.get() == 7);
 }

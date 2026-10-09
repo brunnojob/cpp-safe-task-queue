@@ -89,6 +89,8 @@ public:
     auto future = promise->get_future();
     auto task = std::make_shared<Function>(std::move(function));
     std::unique_lock lock(mutex_);
+    if (executing_ == this && jobs_.size() >= capacity_)
+      throw std::runtime_error("worker cannot wait for queue capacity");
     if (!space_.wait_for(lock, timeout,
                          [&] { return closed_ || jobs_.size() < capacity_; }))
       throw std::runtime_error("capacity timeout");
@@ -116,7 +118,8 @@ public:
           std::make_exception_ptr(std::runtime_error("cancelled")));
     };
     jobs_.push(
-        Job{priority, metrics_.accepted++, std::move(run), std::move(cancel)});
+        Job{priority, metrics_.accepted, std::move(run), std::move(cancel)});
+    metrics_.accepted++;
     ready_.notify_one();
     return future;
   }
