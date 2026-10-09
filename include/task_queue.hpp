@@ -34,10 +34,13 @@ private:
   std::condition_variable ready_, space_, idle_;
   std::priority_queue<Job> jobs_;
   std::vector<std::thread> workers_;
+  std::mutex shutdown_;
+  inline static thread_local TaskQueue *executing_ = nullptr;
   std::size_t capacity_;
   bool closed_ = false;
   Metrics metrics_;
   void worker() {
+    executing_ = this;
     for (;;) {
       Job job;
       {
@@ -129,6 +132,9 @@ public:
     return m;
   }
   void shutdown(bool drain) {
+    if (executing_ == this)
+      throw std::logic_error("shutdown must be called outside a worker");
+    std::lock_guard lifecycle(shutdown_);
     {
       std::lock_guard lock(mutex_);
       closed_ = true;

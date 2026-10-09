@@ -19,8 +19,14 @@ The reusable implementation is in `include/task_queue.hpp`. Tests cover 1,000 co
 
 ## Optional report archive
 
-Use the [shared operations archive client](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/cloud) to queue `result.json` under project `cpp-safe-task-queue`. The client uses `BRUNNODEV_ACCESS_TOKEN` and retains unacknowledged reports locally.
+Use the [native C operations archive client](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/clients/c) to queue `result.json` under project `cpp-safe-task-queue`. The client uses `BRUNNODEV_ACCESS_TOKEN` and retains unacknowledged reports locally.
 
 ## License
 
 Original source and documentation are MIT licensed; see [LICENSE](LICENSE). Third-party dependencies and media retain their respective terms. Maintained by [Brunno Dev](https://brunnodev.store).
+
+## Implementation update
+
+Concurrent shutdown calls are serialized. Workers cannot initiate a shutdown that would join their own thread. Native regression checks cover worker rejection, concurrent shutdown and completed-task metrics.
+
+Contribution trailer: `Co-authored-by: nyctophile <33561761+ineedfoundmyway@users.noreply.github.com>`.
