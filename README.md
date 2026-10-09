@@ -17,17 +17,10 @@ build/task_queue > result.json
 
 The reusable implementation is in `include/task_queue.hpp`. Tests cover 1,000 concurrent tasks, exceptions, deadlines, and rejection after shutdown. A deadline is checked before a task starts; it does not interrupt a running task.
 
-## Result synchronization
+## Optional report archive
 
-The [operations archive](https://vercel-home-telemetry-api.vercel.app/laboratory.html?project=cpp-safe-task-queue) stores execution results. Supabase migrations are in the [API repository](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/supabase/migrations).
+Export a JSON report from the command above, then run `python cloud/sync.py enqueue result.json --project cpp-safe-task-queue` and `python cloud/sync.py sync`. Synchronization requires `BRUNNODEV_ACCESS_TOKEN` and the external operations API; the local outbox retains unacknowledged reports.
 
-```sh
-python cloud/sync.py enqueue result.json --project cpp-safe-task-queue
-python cloud/sync.py sync
-```
+## License
 
-Set `BRUNNODEV_ACCESS_TOKEN` to your session token. The SQLite outbox retains reports until the server confirms persistence; identical content does not create duplicate records. Tokens are not stored in source code. To run the synchronization tests:
-
-```sh
-python -m unittest discover -s cloud
-```
+Original source and documentation are MIT licensed; see [LICENSE](LICENSE). Third-party dependencies and media retain their respective terms. Maintained by [Brunno Dev](https://brunnodev.store).
