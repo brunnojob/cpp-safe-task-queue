@@ -1,0 +1,34 @@
+$ bash -e -o pipefail -c cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (2.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build
+
+$ bash -e -o pipefail -c cmake --build build --parallel 2
+[ 25%] Building CXX object CMakeFiles/task_queue.dir/src/main.cpp.o
+[ 50%] Building CXX object CMakeFiles/queue_tests.dir/tests/queue_test.cpp.o
+[ 75%] Linking CXX executable task_queue
+[ 75%] Built target task_queue
+[100%] Linking CXX executable queue_tests
+[100%] Built target queue_tests
+
+$ bash -e -o pipefail -c ctest --test-dir build --output-on-failure
+Internal ctest changing into directory: /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build
+Test project /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build
+    Start 1: queue
+1/1 Test #1: queue ............................   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.14 sec
+
+$ build/task_queue
+{"sumSquares":338350,"accepted":100,"completed":100,"failed":0}

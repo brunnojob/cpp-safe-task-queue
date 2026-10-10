@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "repository": "brunnojob/cpp-safe-task-queue",
+  "source_commit": "02fa3aa6238004d82256795004230855c76b977b",
+  "generated_at": "2026-10-10T02:35:16.260592+00:00",
+  "run_url": "https://github.com/brunnojob/cpp-safe-task-queue/actions/runs/38017506061",
+  "inputs_sha256": {
+    ".proof/scenarios.json": "10514a10ce57e9256e8d9c053c8f4822a987460fac2850918970928c7a26154b"
+  },
+  "cases": [
+    {
+      "display": false,
+      "name": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 2.857,
+      "output": "-- The CXX compiler identification is GNU 13.3.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n-- Found Threads: TRUE\n-- Configuring done (2.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build\n",
+      "output_sha256": "6b9119be8f588ef93964d084956d03ce450641c42d46f3397b762b1c3e64baf4"
+    },
+    {
+      "display": false,
+      "name": "cmake --build build --parallel 2",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake --build build --parallel 2"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 3.109,
+      "output": "[ 25%] Building CXX object CMakeFiles/task_queue.dir/src/main.cpp.o\n[ 50%] Building CXX object CMakeFiles/queue_tests.dir/tests/queue_test.cpp.o\n[ 75%] Linking CXX executable task_queue\n[ 75%] Built target task_queue\n[100%] Linking CXX executable queue_tests\n[100%] Built target queue_tests\n",
+      "output_sha256": "27f8f52a74ea9f8a1083ea27204d06cddcb1b246af08781f794ce4b58092af2d"
+    },
+    {
+      "display": true,
+      "name": "ctest --test-dir build --output-on-failure",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "ctest --test-dir build --output-on-failure"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 1.403,
+      "output": "Internal ctest changing into directory: /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build\nTest project /home/runner/work/cpp-safe-task-queue/cpp-safe-task-queue/build\n    Start 1: queue\n1/1 Test #1: queue ............................   Passed    0.01 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.14 sec\n",
+      "output_sha256": "65efd56c93de01e36e400f679a11fed7be75d9fbf808ff0d771ad5daf4aefc24"
+    },
+    {
+      "display": true,
+      "name": "Execute 100 concurrent jobs and verify their result",
+      "argv": [
+        "build/task_queue"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "passed": true,
+      "seconds": 0.051,
+      "output": "{\"sumSquares\":338350,\"accepted\":100,\"completed\":100,\"failed\":0}\n",
+      "output_sha256": "8032501fec3e681d975c9cd15777eeb2a16208c21c0d1bed12147701e1cabfe9"
+    }
+  ],
+  "passed": true
+}
