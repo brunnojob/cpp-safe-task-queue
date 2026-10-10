@@ -1,0 +1,60 @@
+{
+  "repository": "brunnojob/cpp-safe-task-queue",
+  "inputs": [
+    ".proof/scenarios.json"
+  ],
+  "cases": [
+    {
+      "name": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "cmake --build build --parallel 2",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake --build build --parallel 2"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "ctest --test-dir build --output-on-failure",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "ctest --test-dir build --output-on-failure"
+      ],
+      "timeout": 900,
+      "display": true
+    },
+    {
+      "name": "Execute 100 concurrent jobs and verify their result",
+      "argv": [
+        "build/task_queue"
+      ],
+      "contains": [
+        "\"sumSquares\":338350",
+        "\"accepted\":100",
+        "\"completed\":100",
+        "\"failed\":0"
+      ],
+      "timeout": 120
+    }
+  ]
+}
