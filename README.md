@@ -29,7 +29,7 @@ Original source and documentation are MIT licensed; see [LICENSE](LICENSE). Thir
 
 Concurrent shutdown calls are serialized. Workers cannot initiate a shutdown that would join their own thread. Native regression checks cover worker rejection, concurrent shutdown and completed-task metrics.
 
-Contribution trailer: `Co-authored-by: nyctophile <329826984+ineedfoundmyway@users.noreply.github.com>`.
+Contribution trailer: `Co-authored-by: nyctophile <33561761+ineedfoundmyway@users.noreply.github.com>`.
 
 ## Execution proof
 
